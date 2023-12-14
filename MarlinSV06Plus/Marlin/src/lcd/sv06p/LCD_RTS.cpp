@@ -2946,4 +2946,9 @@ void RTS_MoveAxisHoming()
   rtscheck.RTS_SndData(10*current_position[Y_AXIS], AXIS_Y_COORD_VP);
   rtscheck.RTS_SndData(10*current_position[Z_AXIS], AXIS_Z_COORD_VP);
 }
+
+void RTS_Set_Waitway(const char new_waitway) {
+    waitway = new_waitway;
+}
+
 #endif //RTS_AVAILABLE
