@@ -1,27 +1,83 @@
-# Introduction
+# Sovol SV06 Plus firmware and parts
 
-Sovol SV06 Plus 3d printer is the larger version of Sovol SV06 but with some new upgrades. Its large 300x300x340mm build volume meets all your 3D printing needs, also it comes with some new upgrade. It comes with a new sovol self-developed high flow all metal hotend, the bigger melt zone and traffic make it capable to print at 150mm/s as standard printing speed. Added touch screen, it looks more fashion and technical. Besides, it  has the 450 watt PSU, filament sensor, spinnable spool holder. Welcome to check more on sovol3d.com.
-# Related tutorials 
+This is a fork of
+[Sovol's official repository for the SV06 Plus 3D printer][sovol-sv06-plus-repo]
+with customized firmware.
 
-- User Manual. [Click here](https://drive.google.com/file/d/1bJmc2MeOSmn5svG3CuQQvvp3vNMjcOrR/view)
-- Sovol Tech Support Youtube Channel: https://www.youtube.com/@sovoltechsupport/videos 
-# Learn more
+# Building the firmware
 
-on Sovol Official Website: https://sovol3d.com/products/sovol-sv06-plus
+The firmware ([Marlin][marlin]) is built with a tool called
+[platformio][platformio], which is a Python package. Install this tool with pip
+(or similar tool such as [pipx][pipx]):
 
-# Source code
+```console
+pip install platformio
+```
 
-This is the official source code for Sovol SV06 PLUS. The damage caused by modifying firmware also using the third party firmware will lose the 1 year warranty. If you need support, it’s recommended to reflash the stock firmware before contacting sovol.
+Change to the `MarlinSV06Plus` subdirectory:
 
-Sovol doesn’t provide tech help for help users to modify source code, but if you need us to add more functions, you are welcome to send us your suggestions via Facebook Messenger or email 
-info@sovol3d.com
+```console
+cd MarlinSV06Plus/
+```
+
+Build the firmware:
+
+```console
+platformio run -e STM32F103RET6_sovol_maple
+```
+
+The built firmware is in `MarlinSV06Plus/.pio/build/STM32F103RET6_sovol_maple/`
+named using the format `firmware-YYYYMMDD-HHMMSS.bin`.
+
+# Installing the firmware
+
+The firmware is updated using a microSD card.
+
+[Sovol has an official firmware update video.][sovol-sv06-plus-firmware-update-video]
+While the video says the microSD card must be formatted as FAT32 with a 4KiB
+(4096 byte) block size, I could not get the firmware to update on my printer
+with my microSD card formatted this way. However, using my microSD cards'
+default formatting of FAT32 with a 512 block size worked fine, so long as the
+card was 16GiB or less.
+
+Update steps:
+
+* Remove all other files and folders from the microSD card.
+* Copy the built firmware `.bin` file to your microSD card.
+  * **Important note:** The printer's mainboard remembers the file name from the
+    previous firmware update, so ensure the new firmware file is named
+    differently from the previous update (e.g. use `fw2.bin` if `fw1.bin` was
+    used last time). The board only seems to remember the single previous
+    filename. Also note that for this comparison, the board may be using only
+    the first 6-8 characters of the file name (e.g. ancient MS-DOS filename
+    shortening, `long_file_name.bin` -> `long_fi~1.bin`).
+* Unmount / eject / safely remove the microSD card from your computer.
+* Turn off your printer.
+* Insert the microSD card into your printer's microSD card slot.
+* Turn on your printer.
+
+The SV06 Plus LCD will show the Sovol logo, which will appear to freeze for
+several seconds. When the firmware update is complete, the LCD animation of the
+extruder printing Sovol's logo will continue as normal. If the LCD remains
+frozen for more than 30 seconds or so, the firmware update process has failed.
+
+# Firmware restoration / recovery
+
+If the firmware update process fails, the board will need to be re-flashed with
+a working firmware such as Sovol's official SV06 Plus firmware. The process is
+the same as above, but using Sovol's official firmware image file.
+
+[Sovol publishes firmware updates here][sovol-download-page]. Their SV06 Plus
+firmware link points to [this Google Drive folder][sovol-sv06-plus-gdrive]. As a
+last resort,
+[I am including a copy of Sovol's official SV06 Plus firmware (version 1.1.5) in this repository as `SV06 Plus_V1.1.5_0324.bin`][local-firmware-copy].
 
 
-# Join Sovol Community
-
-- Sovol Facebook page: https://www.facebook.com/sovol3d/
-- Sovol Youtube Channel: https://www.youtube.com/c/Sovol/videos
-- Sovol Offcial User Group: https://www.facebook.com/groups/sovol3d
-- Sovol Forum website: https://forum.sovol3d.com/
-- Sovol SV06 PLUS & SV06 Official User Group: https://www.facebook.com/groups/sovolsv06usergroup
-
+[local-firmware-copy]: /SV06%20Plus_V1.1.5_0324.bin
+[marlin]: https://marlinfw.org/
+[pipx]: https://github.com/pypa/pipx
+[platformio]: https://platformio.org/
+[sovol-download-page]: https://www.sovol3d.com/pages/download
+[sovol-sv06-plus-firmware-update-video]: https://www.youtube.com/watch?v=b2jUo1KnxZw
+[sovol-sv06-plus-gdrive]: https://drive.google.com/drive/folders/1sJL5uCxHxQVBfpwitEse-BqS4v_j-ktz
+[sovol-sv06-plus-repo]: https://github.com/Sovol3d/SV06-PLUS
