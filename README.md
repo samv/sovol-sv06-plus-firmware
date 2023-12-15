@@ -4,6 +4,13 @@ This is a fork of
 [Sovol's official repository for the SV06 Plus 3D printer][sovol-sv06-plus-repo]
 with customized firmware.
 
+# Disclaimer
+
+This firmware is experimental. Using any third party or custom software carries
+risks, including damage to your printer. I am not responsible for any undesired
+behavior or damage this firmware may cause. If you are not comfortable with
+these risks, do not use this firmware.
+
 # New features
 
 * On bed leveling ([`G29`][G29]) completion, return the LCD to the leveling
