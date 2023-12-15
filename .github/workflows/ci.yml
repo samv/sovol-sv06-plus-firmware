@@ -37,7 +37,7 @@ jobs:
       - name: 📦 Save artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: "Firmware"
+          name: "firmware-${{ github.sha }}.zip"
           path: |
             MarlinSV06Plus/.pio/build/STM32F103RET6_sovol_maple/*.bin
 
