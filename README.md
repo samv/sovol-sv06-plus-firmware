@@ -4,6 +4,10 @@ This is a fork of
 [Sovol's official repository for the SV06 Plus 3D printer][sovol-sv06-plus-repo]
 with customized firmware.
 
+The original repository contains the firmware within the `MarlinSV06Plus`
+subdirectory. This fork removes the model files and moves the firmware to the
+repository root.
+
 # Disclaimer
 
 This firmware is experimental. Using any third party or custom software carries
