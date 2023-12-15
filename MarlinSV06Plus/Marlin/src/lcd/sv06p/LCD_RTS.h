@@ -18,19 +18,19 @@
 #define SizeofDatabuf       26
 
 /*************Register and Variable addr*****************/
-#define	RegAddr_W	0x80
-#define	RegAddr_R	0x81
-#define	VarAddr_W	0x82
-#define	VarAddr_R	0x83
-#define	ExchangePageBase    ((unsigned long)0x5A010000)     // the first page ID. other page = first page ID + relevant num;
-#define	StartSoundSet       ((unsigned long)0x060480A0)     // 06,start-music; 04, 4 musics; 80, the volume value; 04, return value about music number.
-#define	Beep       					((unsigned long)0x02AF0100)
-#define	Beep1       				((unsigned long)0xFFFF0101)
-#define	FONT_EEPROM      90
+#define RegAddr_W   0x80
+#define RegAddr_R   0x81
+#define VarAddr_W   0x82
+#define VarAddr_R   0x83
+#define ExchangePageBase    ((unsigned long)0x5A010000)     // the first page ID. other page = first page ID + relevant num;
+#define StartSoundSet       ((unsigned long)0x060480A0)     // 06,start-music; 04, 4 musics; 80, the volume value; 04, return value about music number.
+#define Beep                        ((unsigned long)0x02AF0100)
+#define Beep1                       ((unsigned long)0xFFFF0101)
+#define FONT_EEPROM      90
 
 /*variable addr*/
-#define	ExchangepageAddr	       0x0084
-#define	SoundAddr			           0x00A0
+#define ExchangepageAddr           0x0084
+#define SoundAddr                      0x00A0
 
 #define START1_PROCESS_ICON_VP             0x1000
 #define PRINT_SPEED_RATE_VP                0x1006
@@ -257,40 +257,40 @@ enum PROC_COM
   PrintFileKey,
   SelectFileKey,
   AdvancedKey,
-  Nozzle_P,                       
-  Nozzle_I,                       
-  Nozzle_D,                       
-  Hot_Bed_P,                       
-  Hot_Bed_I,                       
-  Hot_Bed_D,                       
-  Vmax_X,                        
-  Vmax_Y,                         
-  Vmax_Z,                        
-  Vmax_E,                         
-  Accel,                          
-  A_Retract,                     
-  A_Travel,                       
-  Amax_X,                        
-  Amax_Y,                          
-  Amax_Z,                         
-  Amax_E,                       
-  Jerk_X,                        
-  Jerk_Y,                      
-  Jerk_Z,                          
-  Jerk_E,                          
-  Steps_X,                     
-  Steps_Y,                       
-  Steps_Z,                         
+  Nozzle_P,
+  Nozzle_I,
+  Nozzle_D,
+  Hot_Bed_P,
+  Hot_Bed_I,
+  Hot_Bed_D,
+  Vmax_X,
+  Vmax_Y,
+  Vmax_Z,
+  Vmax_E,
+  Accel,
+  A_Retract,
+  A_Travel,
+  Amax_X,
+  Amax_Y,
+  Amax_Z,
+  Amax_E,
+  Jerk_X,
+  Jerk_Y,
+  Jerk_Z,
+  Jerk_E,
+  Steps_X,
+  Steps_Y,
+  Steps_Z,
   Steps_E,
   Advance_K,
   AdvancedBackKey,
   FilamentChange,
-  Fan_speed, 
+  Fan_speed,
   ZoffsetUnitKey,
-  TMCDriver, 
+  TMCDriver,
   Current_X,
   Current_Y,
-  Current_Z,                     
+  Current_Z,
   Current_E,
   Threshold_X,
   Threshold_Y,
@@ -301,7 +301,7 @@ enum PROC_COM
   ChangePageKey
 };
 
-const unsigned long Addrbuf[] = 
+const unsigned long Addrbuf[] =
 {
   0x1002,
   0x1004,
