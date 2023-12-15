@@ -4,6 +4,18 @@ This is a fork of
 [Sovol's official repository for the SV06 Plus 3D printer][sovol-sv06-plus-repo]
 with customized firmware.
 
+# New features
+
+* On bed leveling ([`G29`][G29]) completion, return the LCD to the leveling
+  screen. Originally the LCD would get stuck displaying the final leveling grid
+  with no option to exit if `G29` were invoked via serial.
+
+* Using [`M73`][M73], display progress and remaining time on the LCD just like
+  when printing from the SD card. The LCD's print cancel button now works to
+  stop the print, so long as the client supports the cancel host action (which
+  Octoprint does). This is adapted from
+  [the LCD branch of daleye's fork][daleye-fork-lcd-branch].
+
 # Building the firmware
 
 The firmware ([Marlin][marlin]) is built with a tool called
@@ -73,6 +85,9 @@ last resort,
 [I am including a copy of Sovol's official SV06 Plus firmware (version 1.1.5) in this repository as `SV06 Plus_V1.1.5_0324.bin`][local-firmware-copy].
 
 
+[G29]: https://marlinfw.org/docs/gcode/G029-abl-bilinear.html
+[M73]: https://marlinfw.org/docs/gcode/M073.html
+[daleye-fork-lcd-branch]: https://github.com/daleye/SV06-PLUS/compare/42f16c0fdb5e7de022d615e0a665aed042e0be49...b5ec92a7a4487f183714fc544ca0ef5fd8cb180a
 [local-firmware-copy]: /SV06%20Plus_V1.1.5_0324.bin
 [marlin]: https://marlinfw.org/
 [pipx]: https://github.com/pypa/pipx
