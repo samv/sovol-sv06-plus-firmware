@@ -23,6 +23,8 @@ these risks, do not use this firmware.
   [Octoprint][octoprint] does). This is adapted from
   [the LCD branch of daleye's fork][daleye-fork-lcd-branch].
 
+![Photo of Sovol SV06 Plus LCD showing progress during USB print][lcd-usb-print-photo]
+
 # Building the firmware
 
 The firmware ([Marlin][marlin]) is built with a tool called
@@ -101,6 +103,7 @@ the [GNU General Public License v3.0][firmware-license].
 [M73]: https://marlinfw.org/docs/gcode/M073.html
 [daleye-fork-lcd-branch]: https://github.com/daleye/SV06-PLUS/compare/42f16c0fdb5e7de022d615e0a665aed042e0be49...b5ec92a7a4487f183714fc544ca0ef5fd8cb180a
 [firmware-license]: /MarlinSV06Plus/LICENSE
+[lcd-usb-print-photo]: /images/lcd-usb-print-photo.jpg
 [local-firmware-copy]: /SV06%20Plus_V1.1.5_0324.bin
 [marlin]: https://marlinfw.org/
 [octoprint]: https://octoprint.org/
