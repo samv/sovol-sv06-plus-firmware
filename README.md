@@ -84,10 +84,16 @@ firmware link points to [this Google Drive folder][sovol-sv06-plus-gdrive]. As a
 last resort,
 [I am including a copy of Sovol's official SV06 Plus firmware (version 1.1.5) in this repository as `SV06 Plus_V1.1.5_0324.bin`][local-firmware-copy].
 
+# License
+
+The Sovol SV06 Plus firmware is based on [Marlin][marlin] and is licensed under
+the [GNU General Public License v3.0][firmware-license].
+
 
 [G29]: https://marlinfw.org/docs/gcode/G029-abl-bilinear.html
 [M73]: https://marlinfw.org/docs/gcode/M073.html
 [daleye-fork-lcd-branch]: https://github.com/daleye/SV06-PLUS/compare/42f16c0fdb5e7de022d615e0a665aed042e0be49...b5ec92a7a4487f183714fc544ca0ef5fd8cb180a
+[firmware-license]: /MarlinSV06Plus/LICENSE
 [local-firmware-copy]: /SV06%20Plus_V1.1.5_0324.bin
 [marlin]: https://marlinfw.org/
 [octoprint]: https://octoprint.org/
