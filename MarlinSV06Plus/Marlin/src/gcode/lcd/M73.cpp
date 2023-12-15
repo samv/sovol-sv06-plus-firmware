@@ -68,13 +68,11 @@ void GcodeSuite::M73() {
         rtscheck.RTS_SndData((unsigned char)percentComplete, PRINT_PROCESS_VP);
         if (percentComplete == 100)
         {
-          rtscheck.RTS_SndData(0, PRINT_TIME_HOUR_VP);
-          rtscheck.RTS_SndData(0, PRINT_TIME_MIN_VP);
-          rtscheck.RTS_SndData(0, PRINT_SURPLUS_TIME_HOUR_VP);
-          rtscheck.RTS_SndData(0, PRINT_SURPLUS_TIME_MIN_VP);
-          rtscheck.RTS_SDcard_Stop();
-          PrintFlag = 0;
-          Update_Time_Value = 0;
+            RTS_USBPrint_Finish();
+        }
+        else
+        {
+            RTS_USBPrint_Set();
         }
       #endif
 
