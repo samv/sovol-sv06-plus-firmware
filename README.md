@@ -50,7 +50,7 @@ Update steps:
     used last time). The board only seems to remember the single previous
     filename. Also note that for this comparison, the board may be using only
     the first 6-8 characters of the file name (e.g. ancient MS-DOS filename
-    shortening, `long_file_name.bin` -> `long_fi~1.bin`).
+    shortening, `long_file_name.bin` -> `long_f~1.bin`).
 * Unmount / eject / safely remove the microSD card from your computer.
 * Turn off your printer.
 * Insert the microSD card into your printer's microSD card slot.
