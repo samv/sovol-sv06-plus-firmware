@@ -40,19 +40,18 @@ jobs:
 
       - name: 🏗️ Build firmware
         run: platformio run -e STM32F103RET6_sovol_maple
-        working-directory: ./MarlinSV06Plus
 
       - name: 📦 Save artifacts
         uses: actions/upload-artifact@v3
         with:
           name: "firmware-${{ github.sha }}.zip"
           path: |
-            MarlinSV06Plus/.pio/build/STM32F103RET6_sovol_maple/*.bin
+            .pio/build/STM32F103RET6_sovol_maple/*.bin
 
       - name: 🚢 Publish release artifacts
         if: github.event_name == 'release' && github.event.action == 'created'
         run: |
-          cp MarlinSV06Plus/.pio/build/STM32F103RET6_sovol_maple/*.bin "firmware-${{ github.ref_name }}.bin"
+          cp .pio/build/STM32F103RET6_sovol_maple/*.bin "firmware-${{ github.ref_name }}.bin"
           gh release upload "${{ github.ref_name }}" "firmware-${{ github.ref_name }}.bin"
 
 concurrency:
