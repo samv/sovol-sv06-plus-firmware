@@ -34,6 +34,9 @@
 #endif
 #if ENABLED(RTS_AVAILABLE)
 #define CHECKFILEMENT false
+#if ENABLED(HOST_ACTION_COMMANDS)
+  #include "../../feature/host_actions.h"
+#endif
 
 float zprobe_zoffset;
 float last_zoffset = 0.0;
@@ -876,6 +879,9 @@ void RTSSHOW::RTS_HandleData()
         RTS_SndData(0, PRINT_SURPLUS_TIME_HOUR_VP);
         RTS_SndData(0, PRINT_SURPLUS_TIME_MIN_VP);
         RTS_SDcard_Stop();
+        #ifdef ACTION_ON_CANCEL
+          host_action_cancel();
+        #endif
         PrintFlag = 0;
         Update_Time_Value = 0;
       }
