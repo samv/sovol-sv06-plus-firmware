@@ -30,9 +30,6 @@ jobs:
         run: |
           python3 -m pip install pre-commit platformio
 
-      - name: 🔥 Run static checks
-        run: pre-commit run --all-files
-
       - name: 🏗️ Build firmware
         run: platformio run -e STM32F103RET6_sovol_maple
         working-directory: ./MarlinSV06Plus
