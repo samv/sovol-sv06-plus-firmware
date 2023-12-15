@@ -25,7 +25,7 @@
  * Release version. Leave the Marlin version or apply a custom scheme.
  */
 #ifndef SHORT_BUILD_VERSION
-  #define SHORT_BUILD_VERSION "V1.1.5_smkent_1"
+  #define SHORT_BUILD_VERSION "V1.1.5_smkent_2"
 #endif
 /**
  * Verbose version identifier containing a unique identifier, such as the
