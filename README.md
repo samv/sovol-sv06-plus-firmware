@@ -13,7 +13,7 @@ with customized firmware.
 * Using [`M73`][M73], display progress and remaining time on the LCD just like
   when printing from the SD card. The LCD's print cancel button now works to
   stop the print, so long as the client supports the cancel host action (which
-  Octoprint does). This is adapted from
+  [Octoprint][octoprint] does). This is adapted from
   [the LCD branch of daleye's fork][daleye-fork-lcd-branch].
 
 # Building the firmware
@@ -90,6 +90,7 @@ last resort,
 [daleye-fork-lcd-branch]: https://github.com/daleye/SV06-PLUS/compare/42f16c0fdb5e7de022d615e0a665aed042e0be49...b5ec92a7a4487f183714fc544ca0ef5fd8cb180a
 [local-firmware-copy]: /SV06%20Plus_V1.1.5_0324.bin
 [marlin]: https://marlinfw.org/
+[octoprint]: https://octoprint.org/
 [pipx]: https://github.com/pypa/pipx
 [platformio]: https://platformio.org/
 [sovol-download-page]: https://www.sovol3d.com/pages/download
