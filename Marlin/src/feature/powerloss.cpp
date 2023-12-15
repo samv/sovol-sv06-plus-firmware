@@ -591,7 +591,7 @@ void PrintJobRecovery::resume() {
     rtscheck.RTS_SndData(1, Time1_VP);
     rtscheck.RTS_SndData(ExchangePageBase + 66, ExchangepageAddr);
   }
-  StartPrintFlag = 0;         
+  StartPrintFlag = 0;
 }
 
 #if ENABLED(DEBUG_POWER_LOSS_RECOVERY)

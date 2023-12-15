@@ -747,7 +747,7 @@ volatile bool Temperature::raw_temps_ready = false;
                 #endif
                  _temp_error(heater_id, str_t_heating_failed, GET_TEXT(MSG_HEATING_FAILED_LCD));
               }
-               
+
             }
             else if (current_temp < target - (MAX_OVERSHOOT_PID_AUTOTUNE)) // Heated, then temperature fell too fa
             {
@@ -760,7 +760,7 @@ volatile bool Temperature::raw_temps_ready = false;
                   {
                     rtscheck.RTS_SndData(ExchangePageBase + 107, ExchangepageAddr);
                   }
-                  rtscheck.RTS_SndData(Beep1, SoundAddr);  
+                  rtscheck.RTS_SndData(Beep1, SoundAddr);
               #endif
               _temp_error(heater_id, str_t_thermal_runaway, GET_TEXT(MSG_THERMAL_RUNAWAY));
             }
@@ -1091,7 +1091,7 @@ void Temperature::min_temp_error(const heater_id_t heater_id) {
     {
       rtscheck.RTS_SndData(ExchangePageBase + 109, ExchangepageAddr);
     }
-    rtscheck.RTS_SndData(Beep1, SoundAddr);           
+    rtscheck.RTS_SndData(Beep1, SoundAddr);
   #endif
   _temp_error(heater_id, PSTR(STR_T_MINTEMP), GET_TEXT(MSG_ERR_MINTEMP));
 }
@@ -1421,7 +1421,7 @@ void Temperature::manage_heater() {
               {
                 rtscheck.RTS_SndData(ExchangePageBase + 108, ExchangepageAddr);
               }
-              rtscheck.RTS_SndData(Beep1, SoundAddr);              
+              rtscheck.RTS_SndData(Beep1, SoundAddr);
             #endif
             _temp_error((heater_id_t)e, str_t_heating_failed, GET_TEXT(MSG_HEATING_FAILED_LCD));
           }
@@ -1467,10 +1467,10 @@ void Temperature::manage_heater() {
           {
             rtscheck.RTS_SndData(ExchangePageBase + 109, ExchangepageAddr);
           }
-          rtscheck.RTS_SndData(Beep1, SoundAddr);      
+          rtscheck.RTS_SndData(Beep1, SoundAddr);
         #endif
         max_temp_error(H_BED);
-      } 
+      }
     #endif
 
     #if WATCH_BED
@@ -1488,7 +1488,7 @@ void Temperature::manage_heater() {
             {
               rtscheck.RTS_SndData(ExchangePageBase + 108, ExchangepageAddr);
             }
-            rtscheck.RTS_SndData(Beep1, SoundAddr);   
+            rtscheck.RTS_SndData(Beep1, SoundAddr);
           #endif
           _temp_error(H_BED, str_t_heating_failed, GET_TEXT(MSG_HEATING_FAILED_LCD));
         }
@@ -3851,7 +3851,7 @@ void Temperature::isr() {
             rtscheck.RTS_SndData(1, Time1_VP);
             rtscheck.RTS_SndData(ExchangePageBase + 66, ExchangepageAddr);
           }
-          StartPrintFlag = 0;         
+          StartPrintFlag = 0;
         #endif
         ui.reset_status();
         TERN_(PRINTER_EVENT_LEDS, printerEventLEDs.onHeatingDone());

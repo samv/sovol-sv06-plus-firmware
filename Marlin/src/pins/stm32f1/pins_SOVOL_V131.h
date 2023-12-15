@@ -124,7 +124,7 @@
    * Hardware serial communication ports.
    * If undefined software serial is used according to the pins below
    */
-  
+
 
   #define X_SERIAL_TX_PIN                   PC1
   #define X_SERIAL_RX_PIN                   PC1
@@ -192,7 +192,7 @@
       #define BEEPER_PIN                    PC6
     #endif
   #endif
-  
+
   #elif EITHER(HAS_DWIN_E3V2, IS_DWIN_MARLINUI)
 
   // RET6 DWIN ENCODER LCD

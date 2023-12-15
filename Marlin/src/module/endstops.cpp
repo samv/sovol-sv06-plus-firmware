@@ -387,7 +387,7 @@ void Endstops::not_homing() {
   // If the last move failed to trigger an endstop, call kill
   void Endstops::validate_homing_move() {
     if (trigger_state()) hit_on_purpose();
-    else{ 
+    else{
       if(Mode_flag)
       {
         rtscheck.RTS_SndData(ExchangePageBase + 55, ExchangepageAddr);

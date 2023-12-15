@@ -49,7 +49,7 @@ bool print_preheat_check = false;
 
 float ChangeFilament0Temp = 200;
 
-int StartFlag = 0;   
+int StartFlag = 0;
 int PrintFlag = 0;
 int StartPrintFlag = 0;
 
@@ -170,7 +170,7 @@ void RTSSHOW::RTS_SDCardInit(void)
   }
   else
   {
-    
+
     // clean filename Icon
     for(int j = 0;j < MaxFileNumber;j ++)
     {
@@ -233,7 +233,7 @@ void RTSSHOW::RTS_SDCardUpate(void)
     else
     {
       card.release();
-      
+
       for(int i = 0;i < CardRecbuf.Filesum;i ++)
       {
         for(int j = 0;j < 20;j ++)
@@ -345,102 +345,102 @@ void RTSSHOW::RTS_Init()
 
 int RTSSHOW::RTS_RecData()
 {
-	int frame_index = 0;
-	int timeout = 0;
-	int framelen = 0;
-	bool frame_flag = false;
-	if(LCD_SERIAL.available() <= 0){
-		return -1;
-	}
-	do{
-		if(LCD_SERIAL.available() > 0){
-			databuf[frame_index] = LCD_SERIAL.read();
-			timeout = 0;
-			/* 0x5A */
-			if((frame_index == 0) && (databuf[frame_index] == FHONE)){
-				frame_index++;
-				continue;
-			}
-			/* 0xA5 */
-			else if(frame_index == 1){
-				if(databuf[frame_index] == FHTWO){
-					frame_index++;
-				}
-				else{
-					frame_index = 0;
-				}
-				continue;
-			}
-			/* 长度 */
-			else if(frame_index == 2){
-				framelen = databuf[frame_index];
-				frame_index++;
-				continue;
-			}
-			else if(frame_index != 0){
-				frame_index++;
-				/* 一帧数据提取完毕，剩余的串口数据下次进入这个函数会在处理 */
-				if(frame_index == (framelen + 3)){
-					frame_flag = true;
-					break;
-				}
-			}
-		}
-		else{
-			timeout++;
-			delay(1);
-		}
-	}while(timeout < 50); /* 超时函数 */
-	
-	if(frame_flag == true){
-		recdat.head[0] = databuf[0];
-		recdat.head[1] = databuf[1];
-		recdat.len = databuf[2];
-		recdat.command = databuf[3];
-		for(int idx = 0; idx < frame_index; idx++){
-		}
-	}
-	else{
-		return -1;
-	}
+    int frame_index = 0;
+    int timeout = 0;
+    int framelen = 0;
+    bool frame_flag = false;
+    if(LCD_SERIAL.available() <= 0){
+        return -1;
+    }
+    do{
+        if(LCD_SERIAL.available() > 0){
+            databuf[frame_index] = LCD_SERIAL.read();
+            timeout = 0;
+            /* 0x5A */
+            if((frame_index == 0) && (databuf[frame_index] == FHONE)){
+                frame_index++;
+                continue;
+            }
+            /* 0xA5 */
+            else if(frame_index == 1){
+                if(databuf[frame_index] == FHTWO){
+                    frame_index++;
+                }
+                else{
+                    frame_index = 0;
+                }
+                continue;
+            }
+            /* 长度 */
+            else if(frame_index == 2){
+                framelen = databuf[frame_index];
+                frame_index++;
+                continue;
+            }
+            else if(frame_index != 0){
+                frame_index++;
+                /* 一帧数据提取完毕，剩余的串口数据下次进入这个函数会在处理 */
+                if(frame_index == (framelen + 3)){
+                    frame_flag = true;
+                    break;
+                }
+            }
+        }
+        else{
+            timeout++;
+            delay(1);
+        }
+    }while(timeout < 50); /* 超时函数 */
+
+    if(frame_flag == true){
+        recdat.head[0] = databuf[0];
+        recdat.head[1] = databuf[1];
+        recdat.len = databuf[2];
+        recdat.command = databuf[3];
+        for(int idx = 0; idx < frame_index; idx++){
+        }
+    }
+    else{
+        return -1;
+    }
     // response for writing byte
-    if ((recdat.len == 0x03) && 
-		((recdat.command == 0x82) || (recdat.command == 0x80)) && 
-		(databuf[4] == 0x4F) && 
-		(databuf[5] == 0x4B)){
-		memset(databuf, 0, sizeof(databuf));
-		recnum = 0;
-		return -1;
+    if ((recdat.len == 0x03) &&
+        ((recdat.command == 0x82) || (recdat.command == 0x80)) &&
+        (databuf[4] == 0x4F) &&
+        (databuf[5] == 0x4B)){
+        memset(databuf, 0, sizeof(databuf));
+        recnum = 0;
+        return -1;
     }
     else if (recdat.command == 0x83){
-		// response for reading the data from the variate
-		recdat.addr = databuf[4];
-		recdat.addr = (recdat.addr << 8) | databuf[5];
-		recdat.bytelen = databuf[6];
-		for (unsigned int i = 0; i < recdat.bytelen; i += 2){
-			recdat.data[i / 2] = databuf[7 + i];
-			recdat.data[i / 2] = (recdat.data[i / 2] << 8) | databuf[8 + i];
-		}
+        // response for reading the data from the variate
+        recdat.addr = databuf[4];
+        recdat.addr = (recdat.addr << 8) | databuf[5];
+        recdat.bytelen = databuf[6];
+        for (unsigned int i = 0; i < recdat.bytelen; i += 2){
+            recdat.data[i / 2] = databuf[7 + i];
+            recdat.data[i / 2] = (recdat.data[i / 2] << 8) | databuf[8 + i];
+        }
     }
     else if (recdat.command == 0x81){
-		// response for reading the page from the register
-		recdat.addr = databuf[4];
-		recdat.bytelen = databuf[5];
-		for (unsigned int i = 0; i < recdat.bytelen; i ++){
-			recdat.data[i] = databuf[6 + i];
-			// recdat.data[i] = (recdat.data[i] << 8 )| databuf[7 + i];
-		}
+        // response for reading the page from the register
+        recdat.addr = databuf[4];
+        recdat.bytelen = databuf[5];
+        for (unsigned int i = 0; i < recdat.bytelen; i ++){
+            recdat.data[i] = databuf[6 + i];
+            // recdat.data[i] = (recdat.data[i] << 8 )| databuf[7 + i];
+        }
     }
-	else{
-		memset(databuf, 0, sizeof(databuf));
-		recnum = 0;
-		// receive the wrong data
-		return -1;
-	}
-	memset(databuf, 0, sizeof(databuf));
-	recnum = 0;
+    else{
+        memset(databuf, 0, sizeof(databuf));
+        recnum = 0;
+        // receive the wrong data
+        return -1;
+    }
+    memset(databuf, 0, sizeof(databuf));
+    recnum = 0;
 
-	return 2;
+    return 2;
 }
 
 void RTSSHOW::RTS_SndData(void)
@@ -613,7 +613,7 @@ void RTSSHOW::RTS_SDcard_Stop()
     thermalManager.disable_all_heaters();
   #endif
    print_job_timer.reset();
-  
+
   thermalManager.setTargetHotend(0, 0);
   RTS_SndData(0, HEAD0_SET_TEMP_VP);
   thermalManager.setTargetBed(0);
@@ -713,7 +713,7 @@ void RTSSHOW::RTS_HandleData()
       }
       else if(recdat.data[0] == 2)//完成打印
       {
-        waitway = 7;    
+        waitway = 7;
         card.flag.abort_sd_printing = true;
         quickstop_stepper();
         print_job_timer.reset();
@@ -731,7 +731,7 @@ void RTSSHOW::RTS_HandleData()
       }
       else if(recdat.data[0] == 3)//进入调平界面
       {
-        waitway = 6;    
+        waitway = 6;
         queue.enqueue_now_P(PSTR("G28\nG1 F200 Z0.0"));
         RTS_SndData(thermalManager.fan_speed[0], Fan_speed_VP);
         if(Mode_flag)
@@ -811,7 +811,7 @@ void RTSSHOW::RTS_HandleData()
           else
           {
             RTS_SndData(ExchangePageBase + 65, ExchangepageAddr);
-          }    
+          }
         }
         else if(sdcard_pause_check == false)
         {
@@ -822,7 +822,7 @@ void RTSSHOW::RTS_HandleData()
           else
           {
             RTS_SndData(ExchangePageBase + 67, ExchangepageAddr);
-          }       
+          }
         }
         else
         {
@@ -890,7 +890,7 @@ void RTSSHOW::RTS_HandleData()
           else
           {
             RTS_SndData(ExchangePageBase + 65, ExchangepageAddr);
-          }      
+          }
         }
         else if(sdcard_pause_check == false)
         {
@@ -901,7 +901,7 @@ void RTSSHOW::RTS_HandleData()
           else
           {
             RTS_SndData(ExchangePageBase + 67, ExchangepageAddr);
-          }     
+          }
         }
         else
         {
@@ -1159,14 +1159,14 @@ void RTSSHOW::RTS_HandleData()
           sdcard_pause_check = true;
           pause_action_flag = false;
           PrintFlag = 2;
-          for(uint16_t i = 0;i < CardRecbuf.Filesum;i ++) 
+          for(uint16_t i = 0;i < CardRecbuf.Filesum;i ++)
           {
             if(!strcmp(CardRecbuf.Cardfilename[i], &recovery.info.sd_filename[1]))
             {
               rtscheck.RTS_SndData(CardRecbuf.Cardshowfilename[i], PRINT_FILE_TEXT_VP);
             }
           }
-          
+
           if(Mode_flag)
           {
             RTS_SndData(1, Time_VP);
@@ -1440,7 +1440,7 @@ void RTSSHOW::RTS_HandleData()
       if (recdat.data[0] == 1)//保存按钮
       {
         settings.save();
-        waitway = 6;     
+        waitway = 6;
         queue.enqueue_now_P(PSTR("G28 Z"));
         queue.enqueue_now_P(PSTR("G1 F200 Z0.0"));
       }
@@ -2022,13 +2022,13 @@ void RTSSHOW::RTS_HandleData()
       }
       break;
      case AdvancedKey://高级设置界面
-      if (recdat.data[0] == 1)//PID 
+      if (recdat.data[0] == 1)//PID
         {
           float hot_p,hot_i,hot_d,bed_p,bed_i,bed_d;
           hot_p = PID_PARAM(Kp, 0)*100;
           hot_i = (PID_PARAM(Ki, 0)/8*10000)+0.00001;
           hot_d = PID_PARAM(Kd, 0)*8;
-          
+
           bed_p = thermalManager.temp_bed.pid.Kp*100;
           bed_i = (thermalManager.temp_bed.pid.Ki/8*10000)+0.0001;
           bed_d = thermalManager.temp_bed.pid.Kd*0.8;
@@ -2098,9 +2098,9 @@ void RTSSHOW::RTS_HandleData()
         }
         else if (recdat.data[0] == 5)//Steps
         {
-          RTS_SndData(planner.settings.axis_steps_per_mm[X_AXIS]*10, Steps_X_VP);  
-          RTS_SndData(planner.settings.axis_steps_per_mm[Y_AXIS]*10, Steps_Y_VP);  
-          RTS_SndData(planner.settings.axis_steps_per_mm[Z_AXIS]*10, Steps_Z_VP);   
+          RTS_SndData(planner.settings.axis_steps_per_mm[X_AXIS]*10, Steps_X_VP);
+          RTS_SndData(planner.settings.axis_steps_per_mm[Y_AXIS]*10, Steps_Y_VP);
+          RTS_SndData(planner.settings.axis_steps_per_mm[Z_AXIS]*10, Steps_Z_VP);
           RTS_SndData(planner.settings.axis_steps_per_mm[E_AXIS]*10, Steps_E_VP);
           if(Mode_flag)
           {
@@ -2121,7 +2121,7 @@ void RTSSHOW::RTS_HandleData()
           {
             RTS_SndData(ExchangePageBase + 76, ExchangepageAddr);
           }
-        } 
+        }
         else if (recdat.data[0] == 7)//确认
         {
           RTS_SndData(planner.extruder_advance_K[0] * 100, Advance_K_VP);
@@ -2153,85 +2153,85 @@ void RTSSHOW::RTS_HandleData()
     case Nozzle_P:
       PID_PARAM(Kp, 0) = (float)recdat.data[0]/100;
       thermalManager.updatePID();
-    break;                      
-    case Nozzle_I: 
+    break;
+    case Nozzle_I:
       PID_PARAM(Ki, 0) = (float)recdat.data[0]*8/10000;
       thermalManager.updatePID();
-    break;                      
+    break;
     case Nozzle_D:
       PID_PARAM(Kd, 0) = (float)recdat.data[0]/8;
       thermalManager.updatePID();
-    break;                      
+    break;
     case Hot_Bed_P:
       thermalManager.temp_bed.pid.Kp = (float)recdat.data[0]/100;
       thermalManager.updatePID();
-    break;                      
+    break;
     case Hot_Bed_I:
       thermalManager.temp_bed.pid.Ki = (float)recdat.data[0]*8/10000;
       thermalManager.updatePID();
-    break;                       
+    break;
     case Hot_Bed_D:
       thermalManager.temp_bed.pid.Kd = (float)recdat.data[0]/0.8;
       thermalManager.updatePID();
-    break;                      
+    break;
     case Vmax_X:
       planner.settings.max_feedrate_mm_s[X_AXIS] = recdat.data[0];
-    break;                        
+    break;
     case Vmax_Y:
-      planner.settings.max_feedrate_mm_s[Y_AXIS] = recdat.data[0];  
-    break;                         
+      planner.settings.max_feedrate_mm_s[Y_AXIS] = recdat.data[0];
+    break;
     case Vmax_Z:
-      planner.settings.max_feedrate_mm_s[Z_AXIS] = recdat.data[0];  
-    break;                        
+      planner.settings.max_feedrate_mm_s[Z_AXIS] = recdat.data[0];
+    break;
     case Vmax_E:
-      planner.settings.max_feedrate_mm_s[E_AXIS] = recdat.data[0];  
-    break;                        
+      planner.settings.max_feedrate_mm_s[E_AXIS] = recdat.data[0];
+    break;
     case Accel:
-      planner.settings.acceleration = recdat.data[0]; 
-    break;                          
+      planner.settings.acceleration = recdat.data[0];
+    break;
     case A_Retract:
-      planner.settings.retract_acceleration = recdat.data[0]; 
-    break;                     
+      planner.settings.retract_acceleration = recdat.data[0];
+    break;
     case A_Travel:
-      planner.settings.travel_acceleration = recdat.data[0]; 
-    break;                      
+      planner.settings.travel_acceleration = recdat.data[0];
+    break;
     case Amax_X:
-      planner.settings.max_acceleration_mm_per_s2[X_AXIS] = recdat.data[0];  
-    break;                       
+      planner.settings.max_acceleration_mm_per_s2[X_AXIS] = recdat.data[0];
+    break;
     case Amax_Y:
-      planner.settings.max_acceleration_mm_per_s2[Y_AXIS] = recdat.data[0];  
-    break;                         
+      planner.settings.max_acceleration_mm_per_s2[Y_AXIS] = recdat.data[0];
+    break;
     case Amax_Z:
-      planner.settings.max_acceleration_mm_per_s2[Z_AXIS] = recdat.data[0]; 
-    break;                         
+      planner.settings.max_acceleration_mm_per_s2[Z_AXIS] = recdat.data[0];
+    break;
     case Amax_E:
-      planner.settings.max_acceleration_mm_per_s2[E_AXIS] = recdat.data[0];  
-    break;                       
+      planner.settings.max_acceleration_mm_per_s2[E_AXIS] = recdat.data[0];
+    break;
     case Jerk_X:
-      planner.max_jerk[X_AXIS] = ((float)recdat.data[0])/10;  
-    break;                        
+      planner.max_jerk[X_AXIS] = ((float)recdat.data[0])/10;
+    break;
     case Jerk_Y:
-      planner.max_jerk[Y_AXIS] = ((float)recdat.data[0])/10;  
-    break;                      
-    case Jerk_Z: 
-      planner.max_jerk[Z_AXIS] = ((float)recdat.data[0])/10; 
-    break;                         
-    case Jerk_E:    
-      planner.max_jerk[E_AXIS] = ((float)recdat.data[0])/10;  
-    break;                      
-    case Steps_X: 
+      planner.max_jerk[Y_AXIS] = ((float)recdat.data[0])/10;
+    break;
+    case Jerk_Z:
+      planner.max_jerk[Z_AXIS] = ((float)recdat.data[0])/10;
+    break;
+    case Jerk_E:
+      planner.max_jerk[E_AXIS] = ((float)recdat.data[0])/10;
+    break;
+    case Steps_X:
       planner.settings.axis_steps_per_mm[X_AXIS] = ((float)recdat.data[0])/10;
-    break;                    
-    case Steps_Y:    
-      planner.settings.axis_steps_per_mm[Y_AXIS] = ((float)recdat.data[0])/10; 
-    break;                   
-    case Steps_Z: 
-      planner.settings.axis_steps_per_mm[Z_AXIS] = ((float)recdat.data[0])/10; 
-    break;                        
-    case Steps_E:  
-      planner.settings.axis_steps_per_mm[E_AXIS] = ((float)recdat.data[0])/10; 
-    break;  
-    case AdvancedBackKey:    
+    break;
+    case Steps_Y:
+      planner.settings.axis_steps_per_mm[Y_AXIS] = ((float)recdat.data[0])/10;
+    break;
+    case Steps_Z:
+      planner.settings.axis_steps_per_mm[Z_AXIS] = ((float)recdat.data[0])/10;
+    break;
+    case Steps_E:
+      planner.settings.axis_steps_per_mm[E_AXIS] = ((float)recdat.data[0])/10;
+    break;
+    case AdvancedBackKey:
       if(Mode_flag)
       {
         RTS_SndData(ExchangePageBase + 18, ExchangepageAddr);
@@ -2241,7 +2241,7 @@ void RTSSHOW::RTS_HandleData()
         RTS_SndData(ExchangePageBase + 73, ExchangepageAddr);
       }
     break;
-    case Advance_K:  
+    case Advance_K:
       planner.extruder_advance_K[0] = ((float)recdat.data[0])/100;
     break;
     case FilamentChange://自动换料
@@ -2265,7 +2265,7 @@ void RTSSHOW::RTS_HandleData()
       {
         pause_menu_response = PAUSE_RESPONSE_RESUME_PRINT;
       }
-    break;    
+    break;
     case ZoffsetUnitKey://Zoffset unit
       if(recdat.data[0] == 1)
       {
@@ -2328,10 +2328,10 @@ void RTSSHOW::RTS_HandleData()
           babystep.add_mm(Z_AXIS, zprobe_zoffset - last_zoffset);
         }
         probe.offset.z = zprobe_zoffset;
-        RTS_SndData(probe.offset.z * 100, AUTO_BED_LEVEL_ZOFFSET_VP);  
+        RTS_SndData(probe.offset.z * 100, AUTO_BED_LEVEL_ZOFFSET_VP);
     break;
     case TMCDriver:
-      if (recdat.data[0] == 1)//current 
+      if (recdat.data[0] == 1)//current
         {
           RTS_SndData(stepperX.getMilliamps(), Current_X_VP);
           RTS_SndData(stepperY.getMilliamps(), Current_Y_VP);
@@ -2469,7 +2469,7 @@ void RTSSHOW::RTS_HandleData()
       }
       else if((change_page_number != 12) && (change_page_number != 11) && card.isPrinting())
       {
-         for(uint16_t i = 0;i < CardRecbuf.Filesum;i ++) 
+         for(uint16_t i = 0;i < CardRecbuf.Filesum;i ++)
           {
             if(!strcmp(CardRecbuf.Cardfilename[i], &recovery.info.sd_filename[1]))
             {
@@ -2585,7 +2585,7 @@ void EachMomentUpdate()
       {
         rtscheck.RTS_SndData(StartSoundSet, SoundAddr);
         power_off_type_yes = 1;
-        for(uint16_t i = 0;i < CardRecbuf.Filesum;i ++) 
+        for(uint16_t i = 0;i < CardRecbuf.Filesum;i ++)
         {
           if(!strcmp(CardRecbuf.Cardfilename[i], &recovery.info.sd_filename[1]))
           {
@@ -2684,7 +2684,7 @@ void EachMomentUpdate()
 
       rtscheck.RTS_SndData(thermalManager.temp_hotend[0].celsius, HEAD0_CURRENT_TEMP_VP);
       rtscheck.RTS_SndData(thermalManager.temp_bed.celsius, BED_CURRENT_TEMP_VP);
-      rtscheck.RTS_SndData(10 * current_position[Z_AXIS], AXIS_Z_COORD_VP); 
+      rtscheck.RTS_SndData(10 * current_position[Z_AXIS], AXIS_Z_COORD_VP);
 
       if((last_target_temperature[0] != thermalManager.temp_hotend[0].target) || (last_target_temperature_bed != thermalManager.temp_bed.target))
       {
@@ -2692,7 +2692,7 @@ void EachMomentUpdate()
         thermalManager.setTargetBed(thermalManager.temp_bed.target);
         rtscheck.RTS_SndData(thermalManager.temp_hotend[0].target, HEAD0_SET_TEMP_VP);
         rtscheck.RTS_SndData(thermalManager.temp_bed.target, BED_SET_TEMP_VP);
-        last_target_temperature[0] = thermalManager.temp_hotend[0].target;      
+        last_target_temperature[0] = thermalManager.temp_hotend[0].target;
         last_target_temperature_bed = thermalManager.temp_bed.target;
       }
 
@@ -2709,18 +2709,18 @@ void EachMomentUpdate()
         heatway = 0;
         rtscheck.RTS_SndData(10 * Filament0LOAD, HEAD0_FILAMENT_LOAD_DATA_VP);
       }
-      
+
 
       #if ENABLED(CHECKFILEMENT)
         if((0 == READ(FIL_RUNOUT_PIN)))
         {
           rtscheck.RTS_SndData(0, CHANGE_FILAMENT_ICON_VP);
         }
-        else 
+        else
         {
           rtscheck.RTS_SndData(1, CHANGE_FILAMENT_ICON_VP);
         }
-        
+
       #endif
     }
     next_rts_update_ms = ms + RTS_UPDATE_INTERVAL + Update_Time_Value;
@@ -2732,12 +2732,12 @@ void RTSUpdate()
   // Check the status of card
   rtscheck.RTS_SDCardUpate();
 
-	sd_printing = IS_SD_PRINTING();
-	card_insert_st = IS_SD_INSERTED() ;
+    sd_printing = IS_SD_PRINTING();
+    card_insert_st = IS_SD_INSERTED() ;
 
-	if((card_insert_st == false) && (sd_printing == true))
+    if((card_insert_st == false) && (sd_printing == true))
   {
-		if(Mode_flag)
+        if(Mode_flag)
     {
       rtscheck.RTS_SndData(ExchangePageBase + 46, ExchangepageAddr);
     }
@@ -2745,19 +2745,19 @@ void RTSUpdate()
     {
       rtscheck.RTS_SndData(ExchangePageBase + 101, ExchangepageAddr);
     }
-		rtscheck.RTS_SndData(0, CHANGE_SDCARD_ICON_VP);
-		/* 暂停打印，使得喷头可以回到零点 */
+        rtscheck.RTS_SndData(0, CHANGE_SDCARD_ICON_VP);
+        /* 暂停打印，使得喷头可以回到零点 */
     card.pauseSDPrint();
-    print_job_timer.pause();	
+    print_job_timer.pause();
     pause_action_flag = true;
     sdcard_pause_check = false;
-	}
-	/* 更新拔卡和插卡提示图标 */
-	if(last_card_insert_st != card_insert_st){
-		/* 当前页面显示为拔卡提示页面，但卡已经插入了，更新插卡图标 */
-		rtscheck.RTS_SndData((int)card_insert_st, CHANGE_SDCARD_ICON_VP);
-		last_card_insert_st = card_insert_st;
-	}
+    }
+    /* 更新拔卡和插卡提示图标 */
+    if(last_card_insert_st != card_insert_st){
+        /* 当前页面显示为拔卡提示页面，但卡已经插入了，更新插卡图标 */
+        rtscheck.RTS_SndData((int)card_insert_st, CHANGE_SDCARD_ICON_VP);
+        last_card_insert_st = card_insert_st;
+    }
   #if ENABLED(CHECKFILEMENT)
     // checking filement status during printing
     if((true == card.isPrinting()) && (true == PoweroffContinue))
