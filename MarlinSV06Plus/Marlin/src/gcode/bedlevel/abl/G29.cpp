@@ -224,6 +224,10 @@ public:
 G29_TYPE GcodeSuite::G29() {
   DEBUG_SECTION(log_G29, "G29", DEBUGGING(LEVELING));
 
+  #if ENABLED(RTS_AVAILABLE)
+    RTS_Set_Waitway(3);
+  #endif
+
   TERN_(PROBE_MANUALLY, static) G29_State abl;
 
   TERN_(FULL_REPORT_TO_HOST_FEATURE, set_and_report_grblstate(M_PROBE));

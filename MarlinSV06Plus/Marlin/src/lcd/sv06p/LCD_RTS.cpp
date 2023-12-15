@@ -34,6 +34,9 @@
 #endif
 #if ENABLED(RTS_AVAILABLE)
 #define CHECKFILEMENT false
+#if ENABLED(HOST_ACTION_COMMANDS)
+  #include "../../feature/host_actions.h"
+#endif
 
 float zprobe_zoffset;
 float last_zoffset = 0.0;
@@ -875,6 +878,12 @@ void RTSSHOW::RTS_HandleData()
         RTS_SndData(0, PRINT_TIME_MIN_VP);
         RTS_SndData(0, PRINT_SURPLUS_TIME_HOUR_VP);
         RTS_SndData(0, PRINT_SURPLUS_TIME_MIN_VP);
+        #ifdef ACTION_ON_CANCEL
+          host_action_cancel();
+          if (card.isPrinting()) {
+            planner.synchronize();
+          }
+        #endif
         RTS_SDcard_Stop();
         PrintFlag = 0;
         Update_Time_Value = 0;
@@ -2946,4 +2955,57 @@ void RTS_MoveAxisHoming()
   rtscheck.RTS_SndData(10*current_position[Y_AXIS], AXIS_Y_COORD_VP);
   rtscheck.RTS_SndData(10*current_position[Z_AXIS], AXIS_Z_COORD_VP);
 }
+
+void RTS_USBPrint_Set() {
+    if (PrintFlag > 0) {
+        return;
+    }
+    rtscheck.RTS_SndData(0, PRINT_TIME_HOUR_VP);
+    rtscheck.RTS_SndData(0, PRINT_TIME_MIN_VP);
+    rtscheck.RTS_SndData(0, PRINT_SURPLUS_TIME_HOUR_VP);
+    rtscheck.RTS_SndData(0, PRINT_SURPLUS_TIME_MIN_VP);
+    PrintFlag = 1;
+    print_job_timer.reset();
+    print_job_timer.start();
+    // Show print progress LCD screen
+    rtscheck.RTS_SndData("USB Print", PRINT_FILE_TEXT_VP);
+    if(Mode_flag)
+    {
+        rtscheck.RTS_SndData(1, Time_VP);
+        rtscheck.RTS_SndData(ExchangePageBase + 11, ExchangepageAddr);
+    }
+    else
+    {
+        rtscheck.RTS_SndData(1, Time1_VP);
+        rtscheck.RTS_SndData(ExchangePageBase + 66, ExchangepageAddr);
+    }
+}
+
+void RTS_USBPrint_Finish() {
+    if (PrintFlag == 0) {
+        return;
+    }
+    rtscheck.RTS_SndData(0, PRINT_TIME_HOUR_VP);
+    rtscheck.RTS_SndData(0, PRINT_TIME_MIN_VP);
+    rtscheck.RTS_SndData(0, PRINT_SURPLUS_TIME_HOUR_VP);
+    rtscheck.RTS_SndData(0, PRINT_SURPLUS_TIME_MIN_VP);
+    PrintFlag = 0;
+    Update_Time_Value = 0;
+    print_job_timer.stop();
+    // Return LCD to home screen
+    rtscheck.RTS_SndData(0, PRINT_FILE_TEXT_VP);
+    if(Mode_flag)
+    {
+        rtscheck.RTS_SndData(ExchangePageBase + 1, ExchangepageAddr);
+    }
+    else
+    {
+        rtscheck.RTS_SndData(ExchangePageBase + 56, ExchangepageAddr);
+    }
+}
+
+void RTS_Set_Waitway(const char new_waitway) {
+    waitway = new_waitway;
+}
+
 #endif //RTS_AVAILABLE

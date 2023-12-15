@@ -398,3 +398,6 @@ extern int PrintFlag;
 void RTS_AutoBedLevelPage();
 void RTS_MoveAxisHoming();
 void RTS_PauseMoveAxisPage();
+void RTS_USBPrint_Set();
+void RTS_USBPrint_Finish();
+void RTS_Set_Waitway(const char new_waitway);
