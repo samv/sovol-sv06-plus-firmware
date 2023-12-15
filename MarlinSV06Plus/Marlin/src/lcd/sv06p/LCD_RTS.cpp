@@ -878,10 +878,13 @@ void RTSSHOW::RTS_HandleData()
         RTS_SndData(0, PRINT_TIME_MIN_VP);
         RTS_SndData(0, PRINT_SURPLUS_TIME_HOUR_VP);
         RTS_SndData(0, PRINT_SURPLUS_TIME_MIN_VP);
-        RTS_SDcard_Stop();
         #ifdef ACTION_ON_CANCEL
           host_action_cancel();
+          if (card.isPrinting()) {
+            planner.synchronize();
+          }
         #endif
+        RTS_SDcard_Stop();
         PrintFlag = 0;
         Update_Time_Value = 0;
       }
