@@ -45,6 +45,13 @@
  */
 void GcodeSuite::M73() {
 
+  // Don't set the LCD progress if homing is needed.
+  // The SV06 Plus LCD progress screens provide pause and cancel options which
+  // malfunction if the printer has not been homed.
+  if (homing_needed_error()) {
+    return;
+  }
+
   #if ENABLED(DWIN_CREALITY_LCD_ENHANCED)
 
     DWIN_Progress_Update();
