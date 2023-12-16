@@ -607,7 +607,7 @@ void GCodeQueue::get_serial_commands() {
           delay(1);
           rtscheck.RTS_SndData(0, PRINT_SURPLUS_TIME_MIN_VP);
           delay(1);
-          
+
           if(Mode_flag)
           {
             rtscheck.RTS_SndData(ExchangePageBase + 9, ExchangepageAddr);

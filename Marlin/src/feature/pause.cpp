@@ -204,11 +204,11 @@ bool load_filament(const_float_t slow_load_length/*=0*/, const_float_t fast_load
       // rtscheck.RTS_SndData(thermalManager.temp_hotend[0].celsius, HEAD0_CURRENT_TEMP_VP);
       // rtscheck.RTS_SndData(thermalManager.temp_hotend[0].target, HEAD0_SET_TEMP_VP);
       // rtscheck.RTS_SndData(ExchangePageBase + 17, ExchangepageAddr);
-    } 
+    }
     SERIAL_ECHO_MSG(_PMSG(STR_FILAMENT_CHANGE_INSERT));
 
     first_impatient_beep(max_beep_count);
-    
+
 
     KEEPALIVE_STATE(PAUSED_FOR_USER);
     wait_for_user = true;    // LCD click or M108 will clear this
@@ -379,7 +379,7 @@ bool unload_filament(const_float_t unload_length, const bool show_lcd/*=false*/,
     return false;
   }
 
-  if (show_lcd) 
+  if (show_lcd)
   {
     ui.pause_show_message(PAUSE_MESSAGE_UNLOAD, mode);//等待卸下丝料
     rtscheck.RTS_SndData(thermalManager.temp_hotend[0].celsius, HEAD0_CURRENT_TEMP_VP);

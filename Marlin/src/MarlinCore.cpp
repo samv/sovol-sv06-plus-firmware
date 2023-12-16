@@ -717,7 +717,7 @@ inline void manage_inactivity(const bool no_stepper_sleep=false) {
   //   next_check_axes_ms = ms + 100UL;
   // }
   planner.check_axes_activity();
-  
+
   #if PIN_EXISTS(FET_SAFETY)
     static millis_t FET_next;
     if (ELAPSED(ms, FET_next)) {
@@ -862,7 +862,7 @@ void kill(PGM_P const lcd_error/*=nullptr*/, PGM_P const lcd_component/*=nullptr
   {
     rtscheck.RTS_SndData(Beep, SoundAddr);i--;
   }
-  
+
   TERN_(HAS_CUTTER, cutter.kill()); // Full cutter shutdown including ISR control
 
   // Echo the LCD message to serial for extra context
