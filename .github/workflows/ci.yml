@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main
+      - main-upstream
   release:
     types: [created]
   workflow_dispatch:
