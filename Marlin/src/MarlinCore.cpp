@@ -869,7 +869,7 @@ void kill(PGM_P const lcd_error/*=nullptr*/, PGM_P const lcd_component/*=nullptr
   if (lcd_error) { SERIAL_ECHO_START(); SERIAL_ECHOLNPGM_P(lcd_error); }
 
   #if EITHER(HAS_DISPLAY, DWIN_CREALITY_LCD_ENHANCED)
-    ui.kill_screen(lcd_error ?: GET_TEXT(MSG_KILLED), lcd_component ?: NUL_STR);
+    UNUSED(lcd_error); UNUSED(lcd_component);
   #else
     UNUSED(lcd_error); UNUSED(lcd_component);
   #endif
