@@ -1,12 +1,7 @@
 # Sovol SV06 Plus firmware
 
-This is a fork of
-[Sovol's official repository for the SV06 Plus 3D printer][sovol-sv06-plus-repo]
-with customized firmware.
-
-The original repository contains the firmware within the `MarlinSV06Plus`
-subdirectory. This fork removes the model files and moves the firmware to the
-repository root.
+This is a customized version of
+[Sovol's Marlin firmware for the SV06 Plus 3D printer][sovol-sv06-plus-repo].
 
 # Disclaimer
 
@@ -28,6 +23,30 @@ these risks, do not use this firmware.
   [the LCD branch of daleye's fork][daleye-fork-lcd-branch].
 
 ![Photo of Sovol SV06 Plus LCD showing progress during USB print][lcd-usb-print-photo]
+
+# Repository structure
+
+Sovol's firmware for the SV06 Plus is based on [Marlin 2.0.9.2][marlin-2.0.9.2].
+It is published within the `MarlinSV06Plus` directory within their
+[SV06 Plus repository][sovol-sv06-plus-repo].
+
+This repository merges the [official Marlin repository][marlin-repo] with
+Sovol's changes, with additional features on top.
+
+Two additional branches are available to identify Sovol's changes from Marlin
+2.0.9.2:
+
+* [`sovol-marlin-merged`][branch-sovol-marlin-merged]: A simple merge of Marlin
+  2.0.9.2 and Sovol's firmware source code, preserving all changes
+* [`sovol-marlin-merged-minimal`][branch-sovol-marlin-merged-minimal]: A reduced
+  merge of Marlin 2.0.9.2 and Sovol's firmware source code, removing
+  non-functional changes and whitespace errors to produce a minimal set of
+  functional changes.
+
+Some upstream Marlin paths have been renamed to avoid collisions:
+
+* Upstream `.github/` is [`.github_marlin/`](/.github_marlin/)
+* Upstream `README.md` is [`README.marlin.md`](/README.marlin.md)
 
 # Building the firmware
 
@@ -99,10 +118,14 @@ the [GNU General Public License v3.0][firmware-license].
 
 [G29]: https://marlinfw.org/docs/gcode/G029-abl-bilinear.html
 [M73]: https://marlinfw.org/docs/gcode/M073.html
+[branch-sovol-marlin-merged-minimal]: https://github.com/smkent/sovol-sv06-plus-firmware/tree/sovol-marlin-merged-minimal
+[branch-sovol-marlin-merged]: https://github.com/smkent/sovol-sv06-plus-firmware/tree/sovol-marlin-merged
 [daleye-fork-lcd-branch]: https://github.com/daleye/SV06-PLUS/compare/42f16c0fdb5e7de022d615e0a665aed042e0be49...b5ec92a7a4487f183714fc544ca0ef5fd8cb180a
 [firmware-license]: /LICENSE
 [lcd-usb-print-photo]: /.static/lcd-usb-print-photo.jpg
 [local-firmware-copy]: /.static/SV06%20Plus_V1.1.5_0324.bin
+[marlin-2.0.9.2]: https://github.com/MarlinFirmware/Marlin/releases/tag/2.0.9.2
+[marlin-repo]: https://github.com/MarlinFirmware/Marlin
 [marlin]: https://marlinfw.org/
 [octoprint]: https://octoprint.org/
 [pipx]: https://github.com/pypa/pipx
