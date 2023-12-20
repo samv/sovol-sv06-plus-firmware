@@ -2982,6 +2982,9 @@ void RTS_USBPrint_Set() {
 }
 
 void RTS_USBPrint_Finish() {
+    if (card.isPrinting()) {
+        return;
+    }
     if (PrintFlag == 0) {
         return;
     }
