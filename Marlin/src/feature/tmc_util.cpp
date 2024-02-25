@@ -221,7 +221,7 @@
       {
         rtscheck.RTS_SndData(ExchangePageBase + 118, ExchangepageAddr);
       }
-      kill(PSTR("Driver error"));
+      kill(F("Driver error"));
     }
   #endif
 
@@ -570,7 +570,7 @@
   };
 
   template<class TMC>
-  static void print_vsense(TMC &st) { SERIAL_ECHOPGM_P(st.vsense() ? PSTR("1=.18") : PSTR("0=.325")); }
+  static void print_vsense(TMC &st) { SERIAL_ECHOF(st.vsense() ? F("1=.18") : F("0=.325")); }
 
   #if HAS_DRIVER(TMC2130) || HAS_DRIVER(TMC5130)
     static void _tmc_status(TMC2130Stepper &st, const TMC_debug_enum i) {
@@ -741,7 +741,7 @@
           SERIAL_ECHO(st.cs());
           SERIAL_ECHOPGM("/31");
           break;
-        case TMC_VSENSE: SERIAL_ECHOPGM_P(st.vsense() ? PSTR("1=.165") : PSTR("0=.310")); break;
+        case TMC_VSENSE: SERIAL_ECHOF(st.vsense() ? F("1=.165") : F("0=.310")); break;
         case TMC_MICROSTEPS: SERIAL_ECHO(st.microsteps()); break;
         //case TMC_OTPW: serialprint_truefalse(st.otpw()); break;
         //case TMC_OTPW_TRIGGERED: serialprint_truefalse(st.getOTPW()); break;
@@ -1265,15 +1265,14 @@ static bool test_connection(TMC &st) {
 
   if (test_result > 0) SERIAL_ECHOPGM("Error: All ");
 
-  const char *stat;
+  FSTR_P stat;
   switch (test_result) {
     default:
-    case 0: stat = PSTR("OK"); break;
-    case 1: stat = PSTR("HIGH"); break;
-    case 2: stat = PSTR("LOW"); break;
+    case 0: stat = F("OK"); break;
+    case 1: stat = F("HIGH"); break;
+    case 2: stat = F("LOW"); break;
   }
-  SERIAL_ECHOPGM_P(stat);
-  SERIAL_EOL();
+  SERIAL_ECHOLNF(stat);
 
   return test_result;
 }
@@ -1351,7 +1350,7 @@ void test_tmc_connection(LOGICAL_AXIS_ARGS(const bool)) {
     #endif
   }
 
-  if (axis_connection) LCD_MESSAGEPGM(MSG_ERROR_TMC);
+  if (axis_connection) LCD_MESSAGE(MSG_ERROR_TMC);
 }
 
 #endif // HAS_TRINAMIC_CONFIG
