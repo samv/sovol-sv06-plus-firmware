@@ -28,9 +28,11 @@
 #include "../../lcd/marlinui.h"
 #include "../../sd/cardreader.h"
 
-#if ENABLED(DWIN_CREALITY_LCD_ENHANCED)
-  #include "../../lcd/e3v2/enhanced/dwin.h"
-#elif ENABLED(RTS_AVAILABLE)
+#if ENABLED(DWIN_LCD_PROUI)
+  #include "../../lcd/e3v2/proui/dwin.h"
+#endif
+
+#if ENABLED(RTS_AVAILABLE)
   unsigned char percentComplete = 0;
   uint16_t timeRemaining = 0;
   #include "../../lcd/sv06p/LCD_RTS.h"
@@ -52,9 +54,9 @@ void GcodeSuite::M73() {
     return;
   }
 
-  #if ENABLED(DWIN_CREALITY_LCD_ENHANCED)
+  #if ENABLED(DWIN_LCD_PROUI)
 
-    DWIN_Progress_Update();
+    DWIN_M73();
 
   #else
 

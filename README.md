@@ -3,11 +3,29 @@
 This is a customized version of
 [Sovol's Marlin firmware for the SV06 Plus 3D printer][sovol-sv06-plus-repo].
 
-# Disclaimer
+## Fork information
 
-This firmware is experimental. Using any third party or custom software carries
-risks, including damage to your printer. I am not responsible for any undesired
-behavior or damage this firmware may cause. If you are not comfortable with
+This fork has been updated to a later version of Marlin versus the version that ships with
+the Sovol3D SV06 Plus.
+
+The intent is to get it to 2.1.2+ so that I can get ZV input shaping.  So far, it has been
+updated from 2.0.9.2 to 2.0.9.4.  This is the version from which the main '2.1.x' Marlin
+upstream branch is forked, so next release will be with Marlin 2.1 merged.
+
+### Fork History
+
+This is version V1.1.5-3smk-2sv, corresponding to 2.0.9.4.
+
+Version v1.1.5-3smk-1sv, corresponds to 2.0.9.3.  In this version, I just tested that the
+full Z leveling + 25–point auto leveling worked.  I also printed one item that seemed to
+work.
+
+
+## Fork/Branch Disclaimer
+
+This firmware is experimental. Using any third party or custom software carries risks,
+including damage to your printer.  If you use this firmware, you accept responsibility for
+any undesired behavior or damage this firmware may cause. If you are not comfortable with
 these risks, do not use this firmware.
 
 # New features

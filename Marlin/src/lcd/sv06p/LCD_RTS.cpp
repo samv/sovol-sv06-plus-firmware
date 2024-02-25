@@ -17,7 +17,7 @@
 #include "../../libs/duration_t.h"
 #include "../../feature/babystep.h"
 #include "../../feature/powerloss.h"
-#include "../../feature/bedlevel/abl/abl.h"
+#include "../../feature/bedlevel/abl/bbl.h"
 #include "../../feature/tmc_util.h"
 #include "../../gcode/parser.h"
 #include "../../gcode/queue.h"
@@ -297,7 +297,7 @@ void RTSSHOW::RTS_Init()
       zig ^= true;
       for (int x = inStart; x != inStop; x += inInc)
       {
-        RTS_SndData(Z_VALUES_ARR[x][y] * 100, AUTO_BED_LEVEL_1POINT_VP + showcount * 2);
+        RTS_SndData(bedlevel.z_values[x][y] * 100, AUTO_BED_LEVEL_1POINT_VP + showcount * 2);
         showcount++;
       }
     }
@@ -2000,7 +2000,7 @@ void RTSSHOW::RTS_HandleData()
             zig ^= true;
             for (int x = inStart; x != inStop; x += inInc)
             {
-              RTS_SndData(Z_VALUES_ARR[x][y] * 100, AUTO_BED_LEVEL_1POINT_VP + showcount * 2);
+              RTS_SndData(bedlevel.z_values[x][y] * 100, AUTO_BED_LEVEL_1POINT_VP + showcount * 2);
               showcount++;
             }
           }
