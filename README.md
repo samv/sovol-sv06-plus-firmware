@@ -14,11 +14,14 @@ upstream branch is forked, so next release will be with Marlin 2.1 merged.
 
 ### Fork History
 
-This is version V1.1.5-3smk-2sv, corresponding to 2.0.9.4.
+* version V1.1.5-3smk-2scv, corresponding to 2.0.9.4.
 
-Version v1.1.5-3smk-1sv, corresponds to 2.0.9.3.  In this version, I just tested that the
-full Z leveling + 25–point auto leveling worked.  I also printed one item that seemed to
-work.
+* version V1.1.5-3smk-2sv, also corresponding to 2.0.9.4.  I decided using my short initials
+  was insufficient given the model name of the printer :)
+
+* Version v1.1.5-3smk-1sv, corresponds to 2.0.9.3.  In this version, I just tested that the
+  full Z leveling + 25–point auto leveling worked.  I also printed one item that seemed to
+  work.
 
 
 ## Fork/Branch Disclaimer
