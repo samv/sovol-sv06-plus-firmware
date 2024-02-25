@@ -25,7 +25,7 @@
  * Release version. Leave the Marlin version or apply a custom scheme.
  */
 #ifndef SHORT_BUILD_VERSION
-  #define SHORT_BUILD_VERSION "V1.1.5_smkent_3"
+  #define SHORT_BUILD_VERSION "V1.1.5-3smk-1sv"
 #endif
 /**
  * Verbose version identifier containing a unique identifier, such as the
@@ -41,7 +41,7 @@
  * version was tagged.
  */
 #ifndef STRING_DISTRIBUTION_DATE
-  #define STRING_DISTRIBUTION_DATE "2023-03-23"
+  #define STRING_DISTRIBUTION_DATE "2024-02-24"
 #endif
 
 /**
