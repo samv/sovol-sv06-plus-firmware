@@ -14,7 +14,7 @@ upstream branch is forked, so next release will be with Marlin 2.1 merged.
 
 ### Fork History
 
-* version V1.1.5-3smk-2scv, corresponding to 2.0.9.4.
+* version V1.1.5-3smk-2scv, corresponding to 2.0.9.4.  **DID NOT SUCCEED** (boo)
 
 * version V1.1.5-3smk-2sv, also corresponding to 2.0.9.4.  I decided using my short initials
   was insufficient given the model name of the printer :)
