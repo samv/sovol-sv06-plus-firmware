@@ -104,7 +104,7 @@ SERIAL_ECHOLNPGM("helwr");
   // Show initial "wait for start" message
   if (standardM600)
     ui.pause_show_message(PAUSE_MESSAGE_CHANGING, PAUSE_MODE_PAUSE_PRINT, target_extruder);
-  #endif
+
   if(Mode_flag)
   {
     rtscheck.RTS_SndData(ExchangePageBase + 6, ExchangepageAddr);
