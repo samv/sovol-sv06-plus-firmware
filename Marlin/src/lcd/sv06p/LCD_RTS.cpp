@@ -846,7 +846,7 @@ void RTSSHOW::RTS_HandleData()
       {
         RTS_SndData(thermalManager.temp_hotend[0].celsius, HEAD0_CURRENT_TEMP_VP);
         RTS_SndData(thermalManager.temp_hotend[0].target, HEAD0_SET_TEMP_VP);
-        gcode.process_subcommands_now_P(PSTR("M600"));
+        gcode.process_subcommands_now(F("M600"));
       }
     break;
 
@@ -879,7 +879,7 @@ void RTSSHOW::RTS_HandleData()
         RTS_SndData(0, PRINT_SURPLUS_TIME_HOUR_VP);
         RTS_SndData(0, PRINT_SURPLUS_TIME_MIN_VP);
         #ifdef ACTION_ON_CANCEL
-          host_action_cancel();
+          hostui.cancel();
           if (card.isPrinting()) {
             planner.synchronize();
           }
